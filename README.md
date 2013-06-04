@@ -1,8 +1,7 @@
 ## SkyColor
 
-
-расчет цвета SkyBox'а в OpenGL(ES), DirectX10.
-в основе [stellarium](http://www.stellarium.org)
+СЂР°СЃС‡РµС‚ С†РІРµС‚Р° SkyBox'Р° РІ OpenGL(ES), DirectX10.
+РІ РѕСЃРЅРѕРІРµ [stellarium](http://www.stellarium.org)
 
 
 <img align="right" src="http://lozhev.narod.ru/im1.png" alt="im1" />
