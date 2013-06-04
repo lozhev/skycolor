@@ -15,7 +15,7 @@ static const float term2TimesOneOverMaxdLpOneOverGamma = 0.23319134;
 
 struct VS_OUT_SKYBOX_t
 {
-    float4 Position   : SV_POSITION; 
+	float4 Position   : SV_POSITION; 
 	float3 color      : COLOR0;    
 };
 
