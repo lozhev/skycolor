@@ -26,7 +26,7 @@ void main()
     // Transform position to clip space.a
     gl_Position = u_worldViewProjectionMatrix *  position;
 	position=normalize(position);
-	//position*=0.985;//1.0825;
+	position[1]=clamp(position[1],0,1);// цвет ниже горизанта равен горизонту чтоб небыло чорного цвета внизу
 	float cosDistSun = dot(u_sunPos,position);//u_sunPos[0]*position[0] + u_sunPos[1]*position[1] + u_sunPos[2]*position[2];
 	float distSun = acos(cosDistSun);
 	float cosDistSun_q = cosDistSun*cosDistSun;
@@ -54,7 +54,12 @@ void main()
 	const	vec3	gCoeffs = vec3 (-0.969258,  1.875991, 0.0415557 );
 	const	vec3	bCoeffs = vec3 ( 0.0134455,-0.118373, 1.01527 );
 	//vec3 resultSkyColor = vec3(2.04148*tmp.x-0.564977*tmp.y-0.344713*tmp.z, -0.969258*tmp.x+1.87599*tmp.y+0.0415557*tmp.z, 0.0134455*tmp.x-0.118373*tmp.y+1.01527*tmp.z);//, 1.);
-	vec3 resultSkyColor = vec3(dot(rCoeffs,tmp),dot(gCoeffs,tmp),dot(bCoeffs,tmp));	
+	vec3 resultSkyColor = vec3(dot(rCoeffs,tmp),dot(gCoeffs,tmp),dot(bCoeffs,tmp));
+	
+	// для отчётливого силуэта солндца
+	if (cosDistSun>=0.9925f){
+		resultSkyColor+=35*(cosDistSun-0.9925f);	
+	}
     
 	v_color = resultSkyColor;//color;//a_color;
 }

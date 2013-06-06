@@ -8,7 +8,6 @@ float term_y, Ay, By, Cy, Dy, Ey;
 float term_Y, AY, BY, CY, DY, EY;
 
 static const float pi = 3.1415926535897931;
-//const float ln10 = 2.3025850929940459; //!!!
 static const float alphaWaOverAlphaDa = 1.5051953;
 static const float oneOverGamma = 0.45000452;
 static const float term2TimesOneOverMaxdLpOneOverGamma = 0.23319134;
@@ -25,7 +24,8 @@ float3 color_calc(float3 pos)
 {
 	float3 position = pos;
 	position=normalize(position);
-	float cosDistSun = sunPos[0]*position[0] + sunPos[1]*position[1] + sunPos[2]*position[2];//dot??
+	position[1]=clamp(position[1],0,1);
+	float cosDistSun = dot(sunPos,position);//sunPos[0]*position[0] + sunPos[1]*position[1] + sunPos[2]*position[2];//dot??
 	float distSun = acos(cosDistSun);
 	float cosDistSun_q = cosDistSun*cosDistSun;
 
@@ -49,6 +49,10 @@ float3 color_calc(float3 pos)
 	const	float3	bCoeffs = float3 ( 0.0134455,-0.118373, 1.01527 );
 	//vec3 resultSkyColor = vec3(2.04148*tmp.x-0.564977*tmp.y-0.344713*tmp.z, -0.969258*tmp.x+1.87599*tmp.y+0.0415557*tmp.z, 0.0134455*tmp.x-0.118373*tmp.y+1.01527*tmp.z);//, 1.);
 	float3 resultSkyColor = float3(dot(rCoeffs,tmp),dot(gCoeffs,tmp),dot(bCoeffs,tmp));
+	
+	if (cosDistSun>=0.9925f){
+		resultSkyColor+=35*(cosDistSun-0.9925f);	
+	}
     
 	return resultSkyColor;
 }
